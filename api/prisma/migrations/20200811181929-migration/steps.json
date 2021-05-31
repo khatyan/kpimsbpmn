@@ -1,0 +1,27 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "workflowStatusId"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "User",
+      "field": "WorkflowStatus",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "WorkflowStatus"
+        },
+        "directive": "relation"
+      }
+    }
+  ]
+}

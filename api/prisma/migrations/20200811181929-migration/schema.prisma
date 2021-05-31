@@ -1,0 +1,97 @@
+datasource DS {
+  provider = "sqlite"
+  url = "***"
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = "native"
+}
+
+// Define your own datamodels here and run `yarn redwood db save` to create
+// migrations for them.
+// TODO: Please remove the following example:
+model User {
+  id             Int              @id @default(autoincrement())
+  email          String           @unique
+  password       String
+  name           String?
+  IndicatorValue IndicatorValue[]
+  Indicator      Indicator[]
+  Department     Department?      @relation(fields: [departmentId], references: [id])
+  departmentId   Int?
+  WorkflowStatus WorkflowStatus[]
+}
+
+model IndicatorValue {
+  id           Int        @id @default(autoincrement())
+  title        String     @unique
+  description  String
+  creationDate DateTime   @default(now())
+  modfiedDate  DateTime   @default(now())
+  modifiedBy   User       @relation(fields: [userId], references: [id])
+  Indicator    Indicator? @relation(fields: [IndicatorId], references: [id])
+  IndicatorId  Int?
+  userId       Int
+}
+
+model Department {
+  id          Int         @id @default(autoincrement())
+  title       String      @unique
+  description String
+  section     Section?    @relation(fields: [sectionId], references: [id])
+  sectionId   Int?
+  Indicator   Indicator[]
+  Employees   User[]
+}
+
+model Section {
+  id          Int          @id @default(autoincrement())
+  title       String       @unique
+  description String
+  departments Department[]
+}
+
+model Indicator {
+  id             Int              @id @default(autoincrement())
+  title          String           @unique
+  description    String
+  formula        String
+  type           String
+  date           DateTime         @default(now())
+  values         IndicatorValue[]
+  creationDate   DateTime         @default(now())
+  modfiedDate    DateTime         @default(now())
+  user           User             @relation(fields: [userId], references: [id])
+  approvalStatus String
+  actualValue    Int
+  currentValue   Int
+  targetValue    Int
+  userId         Int
+  department     Department       @relation(fields: [departmentId], references: [id])
+  departmentId   Int
+}
+
+model IndicatorAttribute {
+  id          Int    @id @default(autoincrement())
+  title       String @unique
+  description String
+  type        String
+}
+
+model WorkflowStatus {
+  id           Int       @id @default(autoincrement())
+  title        String    @unique
+  description  String
+  Workflow     Workflow? @relation(fields: [workflowId], references: [id])
+  workflowId   Int?
+  participants User[]
+}
+
+model Workflow {
+  id          Int              @id @default(autoincrement())
+  title       String           @unique
+  description String
+  Statuses    WorkflowStatus[]
+
+}
