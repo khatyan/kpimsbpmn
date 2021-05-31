@@ -1,3 +1,6 @@
+# Simple Process Automation
+I have created this repository in order to learn redwood first of all and then learn a bit about process automation. I am using [https://bpmn.io/] library to import a bpmn process. It's no where close to a system and faraway from any to be taken credits. 
+
 # Redwood
 >**HEADS UP:** RedwoodJS is _NOT_ ready for use in Production. It relies heavily on Prisma2, which is currently in testing with an expected production release coming soon. See status at ["Is Prisma2 Ready?"](https://isprisma2ready.com)
 
